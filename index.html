@@ -12,8 +12,20 @@
       <h4>Enter Location</h4>
       <form>
         <input type="text" placeholder="e.g. Denver, CO" />
-        <button type="submit">Submit</button>
+        <button class="location-submit" type="submit">Submit</button>
       </form>
+      <div class="current-weather">
+        <ul>
+          <li id="current-temp"></li>
+          <li id="current-summary"></li>
+          <li id="current-temp-high"></li>
+          <li id="current-temp-low"></li>
+          <li id="current-city"></li>
+          <li id="current-state"></li>
+          <li id="current-date"></li>
+        </ul>
+      </div>
+      
     <script
     src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
   </script>
