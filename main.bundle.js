@@ -52,19 +52,26 @@
 
 	var _currentWeather2 = _interopRequireDefault(_currentWeather);
 
+	var _backgroundImage = __webpack_require__(6);
+
+	var _backgroundImage2 = _interopRequireDefault(_backgroundImage);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// This file is in the entry point in your webpack config.
 	$('form').on('submit', function (event) {
 	  event.preventDefault();
 	  var location = $('input').val().toLowerCase();
 	  $.ajax({
 	    type: "GET",
 	    url: "http://localhost:3000/api/v1/forecast?location=" + location
-	  }).then(setCurrentWeather).catch(function (error) {
-	    console.log('Error: ' + error);
-	  });
-	});
+	  }).then(setCurrentWeather).catch(errorLog);
+
+	  $.ajax({
+	    type: "GET",
+	    url: "http://localhost:3000/api/v1/backgrounds?location=" + location
+	  }).then(setBackgroundImage).catch(errorBackground);
+	}); // This file is in the entry point in your webpack config.
+
 
 	var setCurrentWeather = function setCurrentWeather(weatherInfo) {
 	  var currentWeather = new _currentWeather2.default(weatherInfo.data.attributes);
@@ -76,6 +83,20 @@
 	  $('#current-state').text(currentWeather.state);
 	  $('#current-date').text(currentWeather.date);
 	  $('#current-icon').text('').append(currentWeather.icon);
+	};
+
+	var setBackgroundImage = function setBackgroundImage(imageInfo) {
+	  var image = new _backgroundImage2.default(imageInfo.data.attributes);
+	  $('body').css('background-image', 'url(' + image.url + ')');
+	};
+
+	var errorLog = function errorLog(error) {
+	  console.log(error);
+	};
+
+	var errorBackground = function errorBackground(error) {
+	  $('body').css('background-image', 'linear-gradient(-90deg, #006E90, #67B4DA)');
+	  console.log(error);
 	};
 
 /***/ }),
@@ -113,7 +134,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.container {\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif;\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  height: 100vh; }\n\n.container {\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n", ""]);
 
 	// exports
 
@@ -479,6 +500,26 @@
 
 	exports.default = CurrentWeather;
 	;
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var BackgroundImage = function BackgroundImage(attributes) {
+	  _classCallCheck(this, BackgroundImage);
+
+	  this.url = attributes.image_url;
+	};
+
+	exports.default = BackgroundImage;
 
 /***/ })
 /******/ ]);
