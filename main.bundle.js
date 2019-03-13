@@ -48,6 +48,36 @@
 
 	__webpack_require__(1);
 
+	var _currentWeather = __webpack_require__(5);
+
+	var _currentWeather2 = _interopRequireDefault(_currentWeather);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	// This file is in the entry point in your webpack config.
+	$('form').on('submit', function (event) {
+	  event.preventDefault();
+	  var location = $('input').val().toLowerCase();
+	  $.ajax({
+	    type: "GET",
+	    url: "http://localhost:3000/api/v1/forecast?location=" + location
+	  }).then(setCurrentWeather).catch(function (error) {
+	    console.log('Error: ' + error);
+	  });
+	});
+
+	var setCurrentWeather = function setCurrentWeather(weatherInfo) {
+	  var currentWeather = new _currentWeather2.default(weatherInfo.data.attributes);
+	  $('#current-temp').text(currentWeather.temp + "\xB0F");
+	  $('#current-summary').text(currentWeather.summary);
+	  $('#current-temp-high').text(currentWeather.tempHigh + "\xB0F");
+	  $('#current-temp-low').text(currentWeather.tempLow + "\xB0F");
+	  $('#current-city').text(currentWeather.city);
+	  $('#current-state').text(currentWeather.state);
+	  $('#current-date').text(currentWeather.date);
+	  $('#current-icon').text('').append(currentWeather.icon);
+	};
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -83,7 +113,7 @@
 
 
 	// module
-	exports.push([module.id, "\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.container {\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n", ""]);
 
 	// exports
 
@@ -395,6 +425,60 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ }),
+/* 5 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var CurrentWeather = function () {
+	  function CurrentWeather(attributes) {
+	    _classCallCheck(this, CurrentWeather);
+
+	    this.temp = attributes.current_weather.temperature;
+	    this.summary = attributes.current_weather.summary_short;
+	    this.tempHigh = attributes.current_weather.temp_high;
+	    this.tempLow = attributes.current_weather.temp_low;
+	    this.city = attributes.city;
+	    this.state = attributes.state;
+	    this.date = attributes.date;
+	    this.icon = this.setIcon();
+	  }
+
+	  _createClass(CurrentWeather, [{
+	    key: 'setIcon',
+	    value: function setIcon() {
+	      var weather = this.summary.toLowerCase();
+	      if (weather.includes('sun')) {
+	        return this.icon = '<i class="fas fa-sun"></i>';
+	      } else if (weather.includes('cloud') && weather.includes('partly')) {
+	        return this.icon = '<i class="fas fa-cloud-sun"></i>';
+	      } else if (weather.includes('snow')) {
+	        return this.icon = '<i class="far fa-snowflake"></i>';
+	      } else if (weather.includes('rain')) {
+	        return this.icon = '<i class="fas fa-cloud-rain"></i>';
+	      } else if (weather.includes('cloud')) {
+	        return this.icon = '<i class="fas fa-cloud"></i>';
+	      } else {
+	        return this.icon = '<i class="fas fa-cloud-sun-rain"></i>';
+	      };
+	    }
+	  }]);
+
+	  return CurrentWeather;
+	}();
+
+	exports.default = CurrentWeather;
+	;
 
 /***/ })
 /******/ ]);
