@@ -1,1 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+}
 
+body {
+  font-family: 'Open Sans', sans-serif;
+}
+
+.container {
+  margin: 2rem;
+}
+
+.current-weather {
+  border: 2px solid black;
+  margin: 1rem;
+  max-width: 550px;
+  padding: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.high-low {
+  font-size: 0.8rem;
+}
+
+.location-info {
+  padding: 0.5rem;
+}
+
+.city-state {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+#current-temp {
+  font-size: 4rem;
+  font-weight: bold;
+}
+
+#current-summary {
+  text-transform: uppercase;
+}

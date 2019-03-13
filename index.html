@@ -3,8 +3,10 @@
 <head>
   <meta charset="utf-8">
   <title>Self Directed FD Starter</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700" rel="stylesheet">
 </head>
 <body>
+  <div class="container">
       <!--  the a tag below can link you to another HTML page  -->
       <!--  if you click the button in the browser right now, you'll get an error because that is not a real file path -->
       <a href="<file path"><button class="default-button">GO TO OTHER PAGE</button></a>
@@ -15,17 +17,17 @@
         <button class="location-submit" type="submit">Submit</button>
       </form>
       <div class="current-weather">
-        <ul>
-          <li id="current-temp"></li>
-          <li id="current-summary"></li>
-          <li id="current-temp-high"></li>
-          <li id="current-temp-low"></li>
-          <li id="current-city"></li>
-          <li id="current-state"></li>
-          <li id="current-date"></li>
-        </ul>
+        <div class="weather-details">
+          <div id="current-temp">58F</div>
+          <div id="current-summary">partly cloudy</div>
+          <div class="high-low">High: <span id="current-temp-high"></span>   Low: <span id="current-temp-low"></span></div>
+        </div>
+        <div class="location-info">          
+          <div class="city-state"><span id="current-city">Denver</span>, <span id="current-state">CO</span></div>
+          <div id="current-date"></div>
+        </div>
       </div>
-      
+    </div>
     <script
     src='https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js'>
   </script>
