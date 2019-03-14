@@ -109,7 +109,7 @@
 
 	var setBackgroundImage = function setBackgroundImage(imageInfo) {
 	  var image = new _backgroundImage2.default(imageInfo.data.attributes);
-	  $('body').css('background-image', 'url(' + image.url + ')');
+	  $('.background').removeClass('gradient').html('<img src=' + image.url + ' //>');
 	};
 
 	var errorLog = function errorLog(error) {
@@ -117,7 +117,7 @@
 	};
 
 	var errorBackground = function errorBackground(error) {
-	  $('body').css('background-image', 'linear-gradient(-90deg, #006E90, #67B4DA)');
+	  $('.background').html('').addClass('gradient');
 	  console.log(error);
 	};
 
