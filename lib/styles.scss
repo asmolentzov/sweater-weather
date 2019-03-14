@@ -55,13 +55,16 @@ nav {
   margin: 2rem;
 }
 
-.current-weather, .detailed-weather {
+.current-weather, .detailed-container {
   margin: 1rem;
   max-width: 550px;
   padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.current-weather {
   display: flex;
   justify-content: space-between;
-  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .high-low {
@@ -77,8 +80,25 @@ nav {
   font-weight: bold;
 }
 
-.detailed-weather {
+.detailed-container {
   border: 2px solid black;
+}
+
+.detailed-weather {
+  display: flex;
+  justify-content: space-between;
+  table {
+    min-width: 200px;
+    border-collapse: collapse;
+  }
+  td {
+    border-bottom: 1px solid black;
+    padding: 8px 8px 4px 8px;
+  }
+}
+
+.table-data {
+  text-align: right;
 }
 
 #current-temp {
@@ -90,7 +110,7 @@ nav {
   text-transform: uppercase;
 }
 
-#current-icon {
+#current-icon, #details-icon {
   font-size: 3rem;
   margin-top: 1rem;
 }
