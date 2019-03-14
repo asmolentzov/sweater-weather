@@ -86,7 +86,7 @@
 
 	var setBackgroundImage = function setBackgroundImage(imageInfo) {
 	  var image = new _backgroundImage2.default(imageInfo.data.attributes);
-	  $('body').css('background-image', 'url(' + image.url + ')');
+	  $('.background').removeClass('gradient').html('<img src=' + image.url + ' //>');
 	};
 
 	var errorLog = function errorLog(error) {
@@ -94,7 +94,7 @@
 	};
 
 	var errorBackground = function errorBackground(error) {
-	  $('body').css('background-image', 'linear-gradient(-90deg, #006E90, #67B4DA)');
+	  $('.background').html('').addClass('gradient');
 	  console.log(error);
 	};
 
@@ -133,7 +133,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif;\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  height: 100vh; }\n\n.container {\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.background {\n  height: 100vh;\n  width: 100vw;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  z-index: -1;\n  opacity: 0.8; }\n  .background img {\n    object-fit: cover;\n    width: 100vw;\n    height: 100vh; }\n\n.gradient {\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n", ""]);
 
 	// exports
 
