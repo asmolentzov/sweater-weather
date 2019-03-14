@@ -59,9 +59,32 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(document).ready(function () {
-	  $('form').on('submit', getLocationInfo);
+	  $('#location-form').on('submit', getLocationInfo);
+	  $('#sign-up').on('submit', registerUser);
 	}); // This file is in the entry point in your webpack config.
 
+
+	var registerUser = function registerUser(event) {
+	  event.preventDefault();
+	  $('.errors').text('');
+	  var email = $('input')[0].value;
+	  var password = $('input')[1].value;
+	  var confPassword = $('input')[2].value;
+	  if (password !== confPassword) {
+	    displayError("Error: Please check passwords");
+	  } else {
+	    createUser(email, password, confPassword);
+	  };
+	};
+
+	var createUser = function createUser(email, password, confPassword) {
+	  var usersUrl = ("http://localhost:3000/api/v1") + "/users";
+	  $.post(usersUrl, { email: email, password: password, password_confirmation: confPassword }).done(function (data) {
+	    document.cookie = 'api_key=' + data.api_key;
+	    window.location.replace('index.html');
+	    $('.alerts').text('Successfully created account!');
+	  });
+	};
 
 	var getLocationInfo = function getLocationInfo(event) {
 	  event.preventDefault();
@@ -96,6 +119,10 @@
 	var errorBackground = function errorBackground(error) {
 	  $('.background').html('').addClass('gradient');
 	  console.log(error);
+	};
+
+	var displayError = function displayError(error) {
+	  $('.errors').text(error);
 	};
 
 /***/ }),
@@ -133,7 +160,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.background {\n  height: 100vh;\n  width: 100vw;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  z-index: -1;\n  opacity: 0.8; }\n  .background img {\n    object-fit: cover;\n    width: 100vw;\n    height: 100vh; }\n\n.gradient {\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.background {\n  height: 100vh;\n  width: 100vw;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  z-index: -1;\n  opacity: 0.8; }\n  .background img {\n    object-fit: cover;\n    width: 100vw;\n    height: 100vh; }\n\n.gradient {\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
 
 	// exports
 

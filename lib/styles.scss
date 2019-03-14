@@ -29,6 +29,27 @@ body {
   background-size: cover;
 }
 
+nav {
+  background-color: #E6F4F1;
+  min-height: 40px;
+  padding: 8px 20px 0 20px;
+  
+  #page-title {
+    display: inline-block;
+    font-size: larger;
+    font-weight: bold;
+    a {
+      text-decoration: none;
+    }
+  }
+  #sign-up-link {
+    margin-top: 6px;
+    float: right;
+    font-size: smaller;
+    text-transform: uppercase;
+  }
+}
+
 .container {
   position: relative;
   margin: 2rem;
@@ -68,4 +89,27 @@ body {
 #current-icon {
   font-size: 3rem;
   margin-top: 1rem;
+}
+
+#sign-up {
+  padding-left: 2rem;
+  max-width: 350px;
+  font-weight: bold;
+  h2 {
+    padding-bottom: 0.75rem;
+  }
+  input[type=email], input[type=password] {
+    margin-bottom: 0.75rem;
+    margin-left: 0.25rem;
+    padding: 0.25rem;
+    width: 100%;
+  }
+  input[type=submit] {
+    padding: 0.5rem 1rem;
+    margin-top: 0.75rem;
+    background-color: #E6F4F1;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+  }
 }
