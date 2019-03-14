@@ -15,6 +15,11 @@ body {
   top: 0px;
   z-index: -1;
   opacity: 0.8;
+  img {
+    object-fit: cover;
+    width: 100vw;
+    height: 100vh;
+  }
 }
 
 .gradient {
@@ -22,9 +27,6 @@ body {
   background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
-}
-
-.background-image {
 }
 
 .container {
