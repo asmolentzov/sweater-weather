@@ -58,20 +58,19 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	$('form').on('submit', function (event) {
-	  event.preventDefault();
-	  var location = $('input').val().toLowerCase();
-	  $.ajax({
-	    type: "GET",
-	    url: "http://localhost:3000/api/v1/forecast?location=" + location
-	  }).then(setCurrentWeather).catch(errorLog);
-
-	  $.ajax({
-	    type: "GET",
-	    url: "http://localhost:3000/api/v1/backgrounds?location=" + location
-	  }).then(setBackgroundImage).catch(errorBackground);
+	$(document).ready(function () {
+	  $('form').on('submit', getLocationInfo);
 	}); // This file is in the entry point in your webpack config.
 
+
+	var getLocationInfo = function getLocationInfo(event) {
+	  event.preventDefault();
+	  var location = $('input').val().toLowerCase();
+	  var locationUrl = ("http://localhost:3000/api/v1") + "/forecast?location=" + location;
+	  var backgroundUrl = ("http://localhost:3000/api/v1") + "/backgrounds?location=" + location;
+	  $.get(locationUrl).then(setCurrentWeather).catch(errorLog);
+	  $.get(backgroundUrl).then(setBackgroundImage).catch(errorBackground);
+	};
 
 	var setCurrentWeather = function setCurrentWeather(weatherInfo) {
 	  var currentWeather = new _currentWeather2.default(weatherInfo.data.attributes);
