@@ -19,12 +19,7 @@
 <div class="alerts"></div>
 <div class="background gradient"></div>
 <div class="container">
-  <h4>Enter Location</h4>
   <form id="location-form">
-    <!--  the a tag below can link you to another HTML page  -->
-    <!--  if you click the button in the browser right now, you'll get an error because that is not a real file path -->
-    <a href="<file path"><button class="default-button">GO TO OTHER PAGE</button></a>
-    <h1>Sweater Weather</h1>
     <h4>Enter Location</h4>
     <form>
       <input type="text" placeholder="e.g. Denver, CO" />
@@ -40,6 +35,34 @@
       <div class="location-info">          
         <div class="city-state"><span id="current-city"></span>, <span id="current-state"></span></div>
         <div id="current-date"></div>
+      </div>
+    </div>
+    <div class="detailed-weather">
+      <h4>Details</h4>
+      <div class="details-summary">
+        <div id="details-icon"></div>
+        <div id="details-summary-short"></div>
+        <div id="details-summary"></div>
+      </div>
+      <div class="details-details">
+        <table>
+          <tr>
+            <td>Feels Like</td>
+            <td id="details-feels"></td>
+          </tr>
+          <tr>
+            <td>Humidity</td>
+            <td id="details-humidity"></td>
+          </tr>
+          <tr>
+            <td>Visibility</td>
+            <td id="details-visibility"></td>
+          </tr>
+          <tr>
+            <td>UV Index</td>
+            <td id="details-uv"></td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
