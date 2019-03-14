@@ -59,9 +59,32 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	$(document).ready(function () {
-	  $('form').on('submit', getLocationInfo);
+	  $('#location-form').on('submit', getLocationInfo);
+	  $('#sign-up').on('submit', registerUser);
 	}); // This file is in the entry point in your webpack config.
 
+
+	var registerUser = function registerUser(event) {
+	  event.preventDefault();
+	  $('.errors').text('');
+	  var email = $('input')[0].value;
+	  var password = $('input')[1].value;
+	  var confPassword = $('input')[2].value;
+	  if (!password || !confPassword || password !== confPassword) {
+	    displayError("Error: Please check passwords");
+	  } else {
+	    createUser(email, password, confPassword);
+	  };
+	};
+
+	var createUser = function createUser(email, password, confPassword) {
+	  var usersUrl = ("http://localhost:3000/api/v1") + "/users";
+	  $.post(usersUrl, { email: email, password: password, password_confirmation: confPassword }).done(function (data) {
+	    document.cookie = 'api_key=' + data.api_key;
+	    window.location.replace('index.html');
+	    $('.alerts').text('Successfully created account!');
+	  });
+	};
 
 	var getLocationInfo = function getLocationInfo(event) {
 	  event.preventDefault();
@@ -96,6 +119,10 @@
 	var errorBackground = function errorBackground(error) {
 	  $('body').css('background-image', 'linear-gradient(-90deg, #006E90, #67B4DA)');
 	  console.log(error);
+	};
+
+	var displayError = function displayError(error) {
+	  $('.errors').text(error);
 	};
 
 /***/ }),
