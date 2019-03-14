@@ -98,13 +98,20 @@
 	var setCurrentWeather = function setCurrentWeather(weatherInfo) {
 	  var currentWeather = new _currentWeather2.default(weatherInfo.data.attributes);
 	  $('#current-temp').text(currentWeather.temp + "\xB0F");
-	  $('#current-summary').text(currentWeather.summary);
+	  $('#current-summary').text(currentWeather.summaryShort);
 	  $('#current-temp-high').text(currentWeather.tempHigh + "\xB0F");
 	  $('#current-temp-low').text(currentWeather.tempLow + "\xB0F");
 	  $('#current-city').text(currentWeather.city);
 	  $('#current-state').text(currentWeather.state);
 	  $('#current-date').text(currentWeather.date);
 	  $('#current-icon').text('').append(currentWeather.icon);
+	  $('#details-icon').text('').append(currentWeather.icon);
+	  $('#details-summary-short').text(currentWeather.summaryShort);
+	  $('#details-summary').text(currentWeather.summary);
+	  $('#details-feels').text(currentWeather.tempFeelsLike + "\xB0F");
+	  $('#details-humidity').text(currentWeather.humidity + "%");
+	  $('#details-visibility').text(currentWeather.visibility + " miles");
+	  $('#details-uv').text(currentWeather.uv + " out of 10");
 	};
 
 	var setBackgroundImage = function setBackgroundImage(imageInfo) {
@@ -160,7 +167,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.background {\n  height: 100vh;\n  width: 100vw;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  z-index: -1;\n  opacity: 0.8; }\n  .background img {\n    object-fit: cover;\n    width: 100vw;\n    height: 100vh; }\n\n.gradient {\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather {\n  border: 2px solid black;\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.background {\n  height: 100vh;\n  width: 100vw;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  z-index: -1;\n  opacity: 0.8; }\n  .background img {\n    object-fit: cover;\n    width: 100vw;\n    height: 100vh; }\n\n.gradient {\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather, .detailed-container {\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.current-weather {\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n.detailed-container {\n  border: 2px solid black; }\n\n.detailed-weather {\n  display: flex;\n  justify-content: space-between; }\n  .detailed-weather table {\n    min-width: 200px;\n    border-collapse: collapse; }\n  .detailed-weather td {\n    border-bottom: 1px solid black;\n    padding: 8px 8px 4px 8px; }\n\n.table-data {\n  text-align: right; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon, #details-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
 
 	// exports
 
@@ -491,10 +498,15 @@
 	  function CurrentWeather(attributes) {
 	    _classCallCheck(this, CurrentWeather);
 
-	    this.temp = attributes.current_weather.temperature;
-	    this.summary = attributes.current_weather.summary_short;
-	    this.tempHigh = attributes.current_weather.temp_high;
-	    this.tempLow = attributes.current_weather.temp_low;
+	    this.temp = Math.round(attributes.current_weather.temperature);
+	    this.summaryShort = attributes.current_weather.summary_short;
+	    this.summary = attributes.current_weather.summary;
+	    this.tempHigh = Math.round(attributes.current_weather.temp_high);
+	    this.tempLow = Math.round(attributes.current_weather.temp_low);
+	    this.tempFeelsLike = Math.round(attributes.current_weather.temp_feels_like);
+	    this.humidity = Math.round(attributes.current_weather.humidity * 100);
+	    this.visibility = attributes.current_weather.visibility;
+	    this.uv = attributes.current_weather.uv_index;
 	    this.city = attributes.city;
 	    this.state = attributes.state;
 	    this.date = attributes.date;
