@@ -12,6 +12,27 @@ body {
   height: 100vh;
 }
 
+nav {
+  background-color: #E6F4F1;
+  min-height: 40px;
+  padding: 8px 20px 0 20px;
+  
+  #page-title {
+    display: inline-block;
+    font-size: larger;
+    font-weight: bold;
+    a {
+      text-decoration: none;
+    }
+  }
+  #sign-up {
+    margin-top: 6px;
+    float: right;
+    font-size: smaller;
+    text-transform: uppercase;
+  }
+}
+
 .container {
   margin: 2rem;
 }
