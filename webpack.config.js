@@ -1,4 +1,8 @@
 const path = require('path');
+const webpack = require('webpack');
+const localUrl = JSON.stringify('http://localhost:3000/api/v1');
+const prodUrl = JSON.stringify('https://fierce-meadow-77109.herokuapp.com/api/v1');
+const apiUrl = process.env.NODE_ENV === 'production' ? prodUrl : localUrl;
 
 module.exports = {
   entry: {
@@ -18,5 +22,10 @@ module.exports = {
   },
   resolve: {
     extensions: ['', '.js', '.json', '.css', '.scss']
-  }
+  },
+  plugins: [
+    new webpack.DefinePlugin({
+      'API_URL': apiUrl
+    })
+  ]
 };
