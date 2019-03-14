@@ -55,13 +55,13 @@ nav {
   margin: 2rem;
 }
 
-.current-weather {
-  border: 2px solid black;
+.current-weather, .detailed-weather {
   margin: 1rem;
   max-width: 550px;
   padding: 1.5rem;
   display: flex;
   justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
 .high-low {
@@ -75,6 +75,10 @@ nav {
 .city-state {
   font-size: 2rem;
   font-weight: bold;
+}
+
+.detailed-weather {
+  border: 2px solid black;
 }
 
 #current-temp {
