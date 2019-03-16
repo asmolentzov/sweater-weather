@@ -64,6 +64,17 @@ nav {
   font-weight: bold;
 }
 
+.favorite {
+  text-align: right;
+  button {
+    padding: 0.2rem;
+    text-transform: uppercase;
+    font-size: xx-small;
+    font-weight: bold;
+  }
+  
+}
+
 .detailed-container {
   border: 2px solid black;
 }
