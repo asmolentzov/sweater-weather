@@ -101,14 +101,14 @@ nav {
   text-align: right;
 }
 
-.forecast-container h3 {
-  margin-left: 5rem;
+.forecast-container {
+  margin: 1rem 5rem 1rem 5rem;
 }
 
 .hourly-container {
   display: flex;
   justify-content: space-around;
-  margin: 1rem 5rem 1rem 5rem;
+  margin-top: 1rem;
   padding: 1rem;
   background-color: rgba(255, 255, 255, 0.5);
   text-align: center;
@@ -116,6 +116,37 @@ nav {
 
 .hourly-icon {
   font-size: 2rem;
+}
+
+.daily-container {
+  margin-top: 1rem;
+  padding: 1rem 0 1rem 0;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.day {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;  
+  i {
+    font-size: 2rem;
+  }
+}
+
+.daily-day {
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.daily-day, .daily-high, .daily-low {
+  margin: auto 0;
+}
+
+.daily-icon {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  text-align: center;
 }
 
 #current-temp {
