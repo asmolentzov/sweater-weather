@@ -48,23 +48,15 @@
 
 	__webpack_require__(1);
 
-	var _currentWeather = __webpack_require__(5);
+	var _errors = __webpack_require__(5);
 
-	var _currentWeather2 = _interopRequireDefault(_currentWeather);
+	var errors = _interopRequireWildcard(_errors);
 
-	var _backgroundImage = __webpack_require__(6);
+	var _postHandlers = __webpack_require__(6);
 
-	var _backgroundImage2 = _interopRequireDefault(_backgroundImage);
+	var post = _interopRequireWildcard(_postHandlers);
 
-	var _weatherHour = __webpack_require__(7);
-
-	var _weatherHour2 = _interopRequireDefault(_weatherHour);
-
-	var _weatherDay = __webpack_require__(8);
-
-	var _weatherDay2 = _interopRequireDefault(_weatherDay);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	$(document).ready(function () {
 	  $('#location-form').on('submit', getLocationInfo);
@@ -79,7 +71,7 @@
 	  var password = $('input')[1].value;
 	  var confPassword = $('input')[2].value;
 	  if (password !== confPassword) {
-	    displayError("Error: Please check passwords");
+	    errors.displayError("Error: Please check passwords");
 	  } else {
 	    createUser(email, password, confPassword);
 	  };
@@ -99,67 +91,8 @@
 	  var location = $('input').val().toLowerCase();
 	  var locationUrl = ("http://localhost:3000/api/v1") + "/forecast?location=" + location;
 	  var backgroundUrl = ("http://localhost:3000/api/v1") + "/backgrounds?location=" + location;
-	  $.get(locationUrl).then(setCurrentWeather).catch(errorLog);
-	  $.get(backgroundUrl).then(setBackgroundImage).catch(errorBackground);
-	};
-
-	var setCurrentWeather = function setCurrentWeather(weatherInfo) {
-	  var currentWeather = new _currentWeather2.default(weatherInfo.data.attributes);
-	  postWeatherHours(weatherInfo.data.attributes.weather_hours);
-	  postWeatherDays(weatherInfo.data.attributes.weather_days);
-	  $('#current-temp').text(currentWeather.temp + "\xB0F");
-	  $('#current-summary').text(currentWeather.summaryShort);
-	  $('#current-temp-high').text(currentWeather.tempHigh + "\xB0F");
-	  $('#current-temp-low').text(currentWeather.tempLow + "\xB0F");
-	  $('#current-city').text(currentWeather.city);
-	  $('#current-state').text(currentWeather.state);
-	  $('#current-date').text(currentWeather.date);
-	  $('#current-icon').text('').append(currentWeather.icon);
-	  $('#details-icon').text('').append(currentWeather.icon);
-	  $('#details-summary-short').text(currentWeather.summaryShort);
-	  $('#details-summary').text(currentWeather.summary);
-	  $('#details-feels').text(currentWeather.tempFeelsLike + "\xB0F");
-	  $('#details-humidity').text(currentWeather.humidity + "%");
-	  $('#details-visibility').text(currentWeather.visibility + " miles");
-	  $('#details-uv').text(currentWeather.uv + " out of 10");
-	};
-
-	var setBackgroundImage = function setBackgroundImage(imageInfo) {
-	  var image = new _backgroundImage2.default(imageInfo.data.attributes);
-	  $('body').css("background-image", 'url("' + image.url + '")');
-	};
-
-	var postWeatherHours = function postWeatherHours(weatherHours) {
-	  var hours = weatherHours.map(function (weatherHour) {
-	    return new _weatherHour2.default(weatherHour);
-	  });
-	  $('.hourly-container').html('');
-	  hours.forEach(function (hour) {
-	    $('.hourly-container').append('\n      <div class="hour">\n      <div class="hourly-time">' + hour.time + '</div>\n      <div class="hourly-icon">' + hour.icon + '</div>\n      <div class="hourly-temp">' + hour.temp + '</div>\n      </div>');
-	  });
-	};
-
-	var postWeatherDays = function postWeatherDays(weatherDays) {
-	  var days = weatherDays.map(function (weatherDay) {
-	    return new _weatherDay2.default(weatherDay);
-	  });
-	  $('.daily-table').html('');
-	  days.forEach(function (day) {
-	    $('.daily-table').append('\n      <tr class="day">\n        <td class="daily-day">' + day.day + '</td>\n        <td class="daily-summary">' + day.icon + '<br />' + day.summary + '</td>\n        <td class="daily-precip"><i class="fas fa-tint"></i><br />' + day.precipProbability + '%</td>\n        <td class="daily-high"><i class="fas fa-long-arrow-alt-up"></i>' + day.tempHigh + '\xB0F</td>\n        <td class="daily-low"><i class="fas fa-long-arrow-alt-down"></i>' + day.tempLow + '\xB0F</td>\n      </tr>');
-	  });
-	};
-
-	var errorLog = function errorLog(error) {
-	  console.log(error);
-	};
-
-	var errorBackground = function errorBackground(error) {
-	  $('body').css("background-image", "linear-gradient(-90deg, #006E90, #67B4DA)");
-	  console.log(error);
-	};
-
-	var displayError = function displayError(error) {
-	  $('.errors').text(error);
+	  $.get(locationUrl).then(post.postWeather).catch(errors.errorLog);
+	  $.get(backgroundUrl).then(post.postBackgroundImage).catch(errors.errorBackground);
 	};
 
 /***/ }),
@@ -514,6 +447,107 @@
 /* 5 */
 /***/ (function(module, exports) {
 
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	var errorLog = exports.errorLog = function errorLog(error) {
+	  console.log(error);
+	};
+
+	var errorBackground = exports.errorBackground = function errorBackground(error) {
+	  $('body').css("background-image", "linear-gradient(-90deg, #006E90, #67B4DA)");
+	  console.log(error);
+	};
+
+	var displayError = exports.displayError = function displayError(error) {
+	  $('.errors').text(error);
+	};
+
+/***/ }),
+/* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	exports.postWeatherDays = exports.postWeatherHours = exports.postCurrentWeather = exports.postWeather = exports.postBackgroundImage = undefined;
+
+	var _currentWeather = __webpack_require__(7);
+
+	var _currentWeather2 = _interopRequireDefault(_currentWeather);
+
+	var _backgroundImage = __webpack_require__(8);
+
+	var _backgroundImage2 = _interopRequireDefault(_backgroundImage);
+
+	var _weatherHour = __webpack_require__(9);
+
+	var _weatherHour2 = _interopRequireDefault(_weatherHour);
+
+	var _weatherDay = __webpack_require__(10);
+
+	var _weatherDay2 = _interopRequireDefault(_weatherDay);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var postBackgroundImage = exports.postBackgroundImage = function postBackgroundImage(imageInfo) {
+	  var image = new _backgroundImage2.default(imageInfo.data.attributes);
+	  $('body').css("background-image", 'url("' + image.url + '")');
+	};
+
+	var postWeather = exports.postWeather = function postWeather(weatherInfo) {
+	  postCurrentWeather(weatherInfo.data.attributes);
+	  postWeatherHours(weatherInfo.data.attributes.weather_hours);
+	  postWeatherDays(weatherInfo.data.attributes.weather_days);
+	};
+
+	var postCurrentWeather = exports.postCurrentWeather = function postCurrentWeather(weatherInfo) {
+	  var currentWeather = new _currentWeather2.default(weatherInfo);
+	  $('#current-temp').text(currentWeather.temp + "\xB0F");
+	  $('#current-summary').text(currentWeather.summaryShort);
+	  $('#current-temp-high').text(currentWeather.tempHigh + "\xB0F");
+	  $('#current-temp-low').text(currentWeather.tempLow + "\xB0F");
+	  $('#current-city').text(currentWeather.city);
+	  $('#current-state').text(currentWeather.state);
+	  $('#current-date').text(currentWeather.date);
+	  $('#current-icon').html(currentWeather.icon);
+	  $('#details-icon').html(currentWeather.icon);
+	  $('#details-summary-short').text(currentWeather.summaryShort);
+	  $('#details-summary').text(currentWeather.summary);
+	  $('#details-feels').text(currentWeather.tempFeelsLike + "\xB0F");
+	  $('#details-humidity').text(currentWeather.humidity + "%");
+	  $('#details-visibility').text(currentWeather.visibility + " miles");
+	  $('#details-uv').text(currentWeather.uv + " out of 10");
+	};
+
+	var postWeatherHours = exports.postWeatherHours = function postWeatherHours(weatherHours) {
+	  var hours = weatherHours.map(function (weatherHour) {
+	    return new _weatherHour2.default(weatherHour);
+	  });
+	  $('.hourly-container').html('');
+	  hours.forEach(function (hour) {
+	    $('.hourly-container').append('\n      <div class="hour">\n      <div class="hourly-time">' + hour.time + '</div>\n      <div class="hourly-icon">' + hour.icon + '</div>\n      <div class="hourly-temp">' + hour.temp + '</div>\n      </div>');
+	  });
+	};
+
+	var postWeatherDays = exports.postWeatherDays = function postWeatherDays(weatherDays) {
+	  var days = weatherDays.map(function (weatherDay) {
+	    return new _weatherDay2.default(weatherDay);
+	  });
+	  $('.daily-table').html('');
+	  days.forEach(function (day) {
+	    $('.daily-table').append('\n      <tr class="day">\n        <td class="daily-day">' + day.day + '</td>\n        <td class="daily-summary">' + day.icon + '<br />' + day.summary + '</td>\n        <td class="daily-precip"><i class="fas fa-tint"></i><br />' + day.precipProbability + '%</td>\n        <td class="daily-high"><i class="fas fa-long-arrow-alt-up"></i>' + day.tempHigh + '\xB0F</td>\n        <td class="daily-low"><i class="fas fa-long-arrow-alt-down"></i>' + day.tempLow + '\xB0F</td>\n      </tr>');
+	  });
+	};
+
+/***/ }),
+/* 7 */
+/***/ (function(module, exports) {
+
 	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
@@ -570,7 +604,7 @@
 	;
 
 /***/ }),
-/* 6 */
+/* 8 */
 /***/ (function(module, exports) {
 
 	"use strict";
@@ -590,7 +624,7 @@
 	exports.default = BackgroundImage;
 
 /***/ }),
-/* 7 */
+/* 9 */
 /***/ (function(module, exports) {
 
 	'use strict';
@@ -652,7 +686,7 @@
 	;
 
 /***/ }),
-/* 8 */
+/* 10 */
 /***/ (function(module, exports) {
 
 	'use strict';
