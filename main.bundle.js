@@ -60,13 +60,17 @@
 
 	var _weatherHour2 = _interopRequireDefault(_weatherHour);
 
+	var _weatherDay = __webpack_require__(8);
+
+	var _weatherDay2 = _interopRequireDefault(_weatherDay);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-	// This file is in the entry point in your webpack config.
 	$(document).ready(function () {
 	  $('#location-form').on('submit', getLocationInfo);
 	  $('#sign-up').on('submit', registerUser);
-	});
+	}); // This file is in the entry point in your webpack config.
+
 
 	var registerUser = function registerUser(event) {
 	  event.preventDefault();
@@ -102,6 +106,7 @@
 	var setCurrentWeather = function setCurrentWeather(weatherInfo) {
 	  var currentWeather = new _currentWeather2.default(weatherInfo.data.attributes);
 	  postWeatherHours(weatherInfo.data.attributes.weather_hours);
+	  postWeatherDays(weatherInfo.data.attributes.weather_days);
 	  $('#current-temp').text(currentWeather.temp + "\xB0F");
 	  $('#current-summary').text(currentWeather.summaryShort);
 	  $('#current-temp-high').text(currentWeather.tempHigh + "\xB0F");
@@ -121,7 +126,7 @@
 
 	var setBackgroundImage = function setBackgroundImage(imageInfo) {
 	  var image = new _backgroundImage2.default(imageInfo.data.attributes);
-	  $('.background').removeClass('gradient').html('<img src=' + image.url + ' //>');
+	  $('body').css("background-image", 'url("' + image.url + '")');
 	};
 
 	var postWeatherHours = function postWeatherHours(weatherHours) {
@@ -134,12 +139,22 @@
 	  });
 	};
 
+	var postWeatherDays = function postWeatherDays(weatherDays) {
+	  var days = weatherDays.map(function (weatherDay) {
+	    return new _weatherDay2.default(weatherDay);
+	  });
+	  $('.daily-table').html('');
+	  days.forEach(function (day) {
+	    $('.daily-table').append('\n      <tr class="day">\n        <td class="daily-day">' + day.day + '</td>\n        <td class="daily-summary">' + day.icon + '<br />' + day.summary + '</td>\n        <td class="daily-precip"><i class="fas fa-tint"></i><br />' + day.precipProbability + '%</td>\n        <td class="daily-high"><i class="fas fa-long-arrow-alt-up"></i>' + day.tempHigh + '\xB0F</td>\n        <td class="daily-low"><i class="fas fa-long-arrow-alt-down"></i>' + day.tempLow + '\xB0F</td>\n      </tr>');
+	  });
+	};
+
 	var errorLog = function errorLog(error) {
 	  console.log(error);
 	};
 
 	var errorBackground = function errorBackground(error) {
-	  $('.background').html('').addClass('gradient');
+	  $('body').css("background-image", "linear-gradient(-90deg, #006E90, #67B4DA)");
 	  console.log(error);
 	};
 
@@ -182,7 +197,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif; }\n\n.background {\n  min-height: 100vh;\n  width: 100vw;\n  position: absolute;\n  left: 0px;\n  top: 0px;\n  z-index: -1;\n  opacity: 0.8; }\n  .background img {\n    object-fit: cover;\n    width: 100vw;\n    min-height: 100vh; }\n\n.gradient {\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather, .detailed-container {\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.current-weather {\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n.detailed-container {\n  border: 2px solid black; }\n\n.detailed-weather {\n  display: flex;\n  justify-content: space-between; }\n  .detailed-weather table {\n    min-width: 200px;\n    border-collapse: collapse; }\n  .detailed-weather td {\n    border-bottom: 1px solid black;\n    padding: 8px 8px 4px 8px; }\n\n.table-data {\n  text-align: right; }\n\n.forecast-container h3 {\n  margin-left: 5rem; }\n\n.hourly-container {\n  display: flex;\n  justify-content: space-around;\n  margin: 1rem 5rem 1rem 5rem;\n  padding: 1rem;\n  background-color: rgba(255, 255, 255, 0.5);\n  text-align: center; }\n\n.hourly-icon {\n  font-size: 2rem; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon, #details-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif;\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  min-height: 100vh;\n  background-attachment: fixed; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather, .detailed-container {\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.current-weather {\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n.detailed-container {\n  border: 2px solid black; }\n\n.detailed-weather {\n  display: flex;\n  justify-content: space-between; }\n  .detailed-weather table {\n    min-width: 200px;\n    border-collapse: collapse; }\n  .detailed-weather td {\n    border-bottom: 1px solid black;\n    padding: 8px 8px 4px 8px; }\n\n.table-data {\n  text-align: right; }\n\n.forecast-container {\n  margin: 1rem 10rem 1rem 1rem; }\n\n.hourly-container {\n  display: flex;\n  justify-content: space-around;\n  margin-top: 1rem;\n  padding: 1rem;\n  background-color: rgba(255, 255, 255, 0.5);\n  text-align: center; }\n\n.hourly-icon {\n  font-size: 2rem; }\n\n.daily-container {\n  width: 60%;\n  margin-top: 1rem;\n  padding: 1rem 0 1rem 0;\n  background-color: rgba(255, 255, 255, 0.5); }\n  .daily-container table {\n    width: 100%;\n    table-layout: fixed;\n    text-align: center; }\n  .daily-container tr, .daily-container td {\n    padding-bottom: 1rem; }\n\n.daily-summary {\n  font-size: smaller; }\n\n.day i {\n  font-size: 2rem; }\n\n.daily-day {\n  text-transform: uppercase;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon, #details-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
 
 	// exports
 
@@ -634,6 +649,71 @@
 	}();
 
 	exports.default = WeatherHour;
+	;
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	var WeatherDay = function () {
+	  function WeatherDay(attributes) {
+	    _classCallCheck(this, WeatherDay);
+
+	    this.date = attributes.date;
+	    this.day = this.setDay();
+	    this.summary = attributes.summary;
+	    this.summaryShort = attributes.icon;
+	    this.icon = this.setIcon();
+	    this.precipProbability = Math.round(attributes.precip_probability * 100);
+	    this.tempHigh = Math.round(attributes.temp_high);
+	    this.tempLow = Math.round(attributes.temp_low);
+	  }
+
+	  _createClass(WeatherDay, [{
+	    key: 'setDay',
+	    value: function setDay() {
+	      var weekDays = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+	      var splitDate = this.date.split('-').map(function (data) {
+	        return parseInt(data);
+	      });
+	      var date = new Date(splitDate[0], splitDate[1] - 1, splitDate[2]);
+	      var dayIndex = date.getDay();
+	      return weekDays[dayIndex];
+	    }
+	  }, {
+	    key: 'setIcon',
+	    value: function setIcon() {
+	      var weather = this.summaryShort;
+	      if (weather.includes('sun')) {
+	        return this.icon = '<i class="fas fa-sun"></i>';
+	      } else if (weather.includes('cloud') && weather.includes('partly')) {
+	        return this.icon = '<i class="fas fa-cloud-sun"></i>';
+	      } else if (weather.includes('snow')) {
+	        return this.icon = '<i class="far fa-snowflake"></i>';
+	      } else if (weather.includes('rain')) {
+	        return this.icon = '<i class="fas fa-cloud-rain"></i>';
+	      } else if (weather.includes('cloud')) {
+	        return this.icon = '<i class="fas fa-cloud"></i>';
+	      } else {
+	        return this.icon = '<i class="fas fa-cloud-sun-rain"></i>';
+	      };
+	    }
+	  }]);
+
+	  return WeatherDay;
+	}();
+
+	exports.default = WeatherDay;
 	;
 
 /***/ })
