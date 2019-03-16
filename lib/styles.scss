@@ -103,7 +103,7 @@ nav {
 }
 
 .forecast-container {
-  margin: 1rem 5rem 1rem 5rem;
+  margin: 1rem 10rem 1rem 1rem;
 }
 
 .hourly-container {
@@ -120,23 +120,22 @@ nav {
 }
 
 .daily-container {
+  width: 60%;
   margin-top: 1rem;
   padding: 1rem 0 1rem 0;
   background-color: rgba(255, 255, 255, 0.5);
-  table, tr, td {
-    // border: 1px solid black;
-    // border-collapse: collapse;
-  };
   table {
-    width: 80%;
+    width: 100%;
     table-layout: fixed;
     text-align: center;
+  }
+  tr, td {
+    padding-bottom: 1rem;
   }
 }
 
 .daily-summary {
   font-size: smaller;
-  width: 100px;
 }
 
 .day i{ 
