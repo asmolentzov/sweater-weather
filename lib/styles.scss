@@ -15,6 +15,7 @@ body {
   top: 0px;
   z-index: -1;
   opacity: 0.8;
+  background-attachment: fixed;
   img {
     object-fit: cover;
     width: 100vw;
@@ -122,31 +123,29 @@ nav {
   margin-top: 1rem;
   padding: 1rem 0 1rem 0;
   background-color: rgba(255, 255, 255, 0.5);
+  table, tr, td {
+    // border: 1px solid black;
+    // border-collapse: collapse;
+  };
+  table {
+    width: 80%;
+    table-layout: fixed;
+    text-align: center;
+  }
 }
 
-.day {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;  
-  i {
-    font-size: 2rem;
-  }
+.daily-summary {
+  font-size: smaller;
+  width: 100px;
+}
+
+.day i{ 
+  font-size: 2rem;
 }
 
 .daily-day {
   text-transform: uppercase;
   font-weight: bold;
-}
-
-.daily-day, .daily-high, .daily-low {
-  margin: auto 0;
-}
-
-.daily-icon {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
-  text-align: center;
 }
 
 #current-temp {
