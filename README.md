@@ -1,16 +1,28 @@
 # Sweater Weather
 Sweater Weather is a solo project for Module 4 of the [Back-End Engineering Program](https://turing.io/programs/back-end-engineering/) at the [Turing School of Software & Design](https://turing.io/). The project specifications can be found [here](http://backend.turing.io/module4/projects/self_directed_fe/self_directed_fe_spec). Sweater Weather is the Front-End to a [Back-End project](https://github.com/asmolentzov/sweater_weather) from Module 3 that created an API. This project consumes that API to display weather for a user-specified location. Users can also create accounts, log in, and "favorite" locations. 
-# Screenshot HERE!
+
+You can access the project in production here!: [Sweater Weather](https://asmolentzov.github.io/sweater-weather/index.html)
+
+The project board is available [here](https://waffle.io/asmolentzov/sweater-weather).
+
+![Sweater Weather Main Page](readme-images/denver-main-page.png)
 
 ## Features
 Sweater Weather visitors can search for locations and see the current weather as well as the upcoming hourly and daily forecast:
-# Screenshot HERE
+
+![Forecast Honolulu](readme-images/forecast.png)
+
 They can also create an account:
-#Screenshot HERE
+
+![Sign Up](readme-images/sign-up.png)
+
 Or log in: 
-# Screenshot HERE
+
+![Log In](readme-images/login.png)
+
 Once they are logged in, they can "favorite" locations, as well as remove favorite locations:
-#Screenshot HERE
+
+![Favorites](readme-images/favorites.png)
 
 ## Initial Setup
 To install this project on your local machine:
@@ -48,6 +60,7 @@ If you wish to contribute to this repo, you are welcome to make a PR and I would
 * [JavaScript](https://www.javascript.com/)
 * [jQuery](https://jquery.com/)
 * [Express](https://expressjs.com/)
+* [Waffle](https://waffle.io/)
 
 ## Author
 **[Anna Smolentzov](https://github.com/asmolentzov)**
