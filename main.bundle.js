@@ -63,6 +63,7 @@
 	  $('#location-form').on('submit', getLocationInfo);
 	  $('#sign-up').on('submit', registerUser);
 	  $('#login').on('submit', logIn);
+	  $('#logout').click(logOut);
 	  $('#favorite').click(favoriteLocation);
 	  $(document).on('click', '.remove-favorite', removeFavorite);
 	}); // This file is in the entry point in your webpack config.
@@ -86,7 +87,7 @@
 	  errors.clearErrors();
 	  var email = $('#email').val();
 	  var password = $('#password').val();
-	  var loginUrl = ("http://localhost:3000/api/v1") + "/sessions";
+	  var loginUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/sessions";
 	  $.post(loginUrl, { email: email, password: password }).done(function (data) {
 	    document.cookie = 'api_key=' + data.api_key;
 	    window.location.replace('index.html');
@@ -96,8 +97,13 @@
 	  });
 	};
 
+	var logOut = function logOut() {
+	  document.cookie = "api_key" + "=; expires = Thu, 01 Jan 1970 00:00:00 UTC";
+	  $('.favorites-container').html('');
+	};
+
 	var createUser = function createUser(email, password, confPassword) {
-	  var usersUrl = ("http://localhost:3000/api/v1") + "/users";
+	  var usersUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/users";
 	  $.post(usersUrl, { email: email, password: password, password_confirmation: confPassword }).done(function (data) {
 	    document.cookie = 'api_key=' + data.api_key;
 	    window.location.replace('index.html');
@@ -108,8 +114,8 @@
 	var getLocationInfo = function getLocationInfo(event) {
 	  event.preventDefault();
 	  var location = $('input').val().toLowerCase();
-	  var locationUrl = ("http://localhost:3000/api/v1") + "/forecast?location=" + location;
-	  var backgroundUrl = ("http://localhost:3000/api/v1") + "/backgrounds?location=" + location;
+	  var locationUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/forecast?location=" + location;
+	  var backgroundUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/backgrounds?location=" + location;
 	  $.get(locationUrl).then(post.postWeather).catch(errors.errorLog);
 	  $.get(backgroundUrl).then(post.postBackgroundImage).catch(errors.errorBackground);
 	};
@@ -117,7 +123,7 @@
 	var favoriteLocation = function favoriteLocation(event) {
 	  var location = localStorage.getItem("location");
 	  var api_key = document.cookie.split('=')[1];
-	  var favoritesUrl = ("http://localhost:3000/api/v1") + "/favorites";
+	  var favoritesUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/favorites";
 	  $.post(favoritesUrl, { api_key: api_key, location: location }).done(addFavorite).fail(function (data) {
 	    errors.displayError("Please Log In or Sign Up to Favorite locations!");
 	  });
@@ -139,7 +145,7 @@
 	var removeFavorite = function removeFavorite(event) {
 	  var locationId = $(event.target.parentElement).find('.location-id').text();
 	  var apiKey = document.cookie.split('=')[1];
-	  var favoritesUrl = ("http://localhost:3000/api/v1") + "/favorites";
+	  var favoritesUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/favorites";
 	  $.ajax({
 	    url: favoritesUrl,
 	    method: "delete",
@@ -617,7 +623,7 @@
 	};
 
 	var postFavorites = exports.postFavorites = function postFavorites() {
-	  var favoritesUrl = ("http://localhost:3000/api/v1") + "/favorites";
+	  var favoritesUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/favorites";
 	  var api_key = document.cookie.split('=')[1];
 	  $.get(favoritesUrl, { api_key: api_key }).then(function (data) {
 	    var favorites = data.data.map(function (favorite) {
