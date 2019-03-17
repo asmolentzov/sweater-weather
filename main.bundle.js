@@ -122,12 +122,7 @@
 	var addFavorite = function addFavorite(data) {
 	  $('.alerts').text("Location Favorited!");
 	  $('#favorite').prop("disabled", true).text("Favorited!");
-	  postFavorite();
-	};
-
-	var postFavorite = function postFavorite() {
-	  var weather = JSON.parse(localStorage.getItem("currentWeather"));
-	  $('.favorites').append('\n    <div class="favorite-location">\n      <div class="location-info">          \n        <div class="city-state"><span class="favorite-city">' + weather.city + '</span>, <span class="favorite-state">' + weather.state + '</span></div>\n      </div>\n      <div class="favorite-weather-details">\n        <div class="favorite-temp">' + weather.temp + '\xB0F</div>\n        <div class="favorite-details">\n          <div class="favorite-icon">' + weather.icon + '</div>\n          <div class="favorite-summary">' + weather.summary + '</div>\n        </div>\n      </div>\n      <div class="favorite-high-low">\n        High: <span class="favorite-temp-high">' + weather.tempHigh + '\xB0F</span>   \n        Low: <span class="favorite-temp-low">' + weather.tempLow + '\xB0F</span>\n      </div>\n    </div>');
+	  post.postFavorite();
 	};
 
 /***/ }),
@@ -509,7 +504,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.postWeatherDays = exports.postWeatherHours = exports.postCurrentWeather = exports.postWeather = exports.postBackgroundImage = undefined;
+	exports.postFavorite = exports.postWeatherDays = exports.postWeatherHours = exports.postCurrentWeather = exports.postWeather = exports.postBackgroundImage = undefined;
 
 	var _currentWeather = __webpack_require__(7);
 
@@ -580,6 +575,11 @@
 	  days.forEach(function (day) {
 	    $('.daily-table').append('\n      <tr class="day">\n        <td class="daily-day">' + day.day + '</td>\n        <td class="daily-summary">' + day.icon + '<br />' + day.summary + '</td>\n        <td class="daily-precip"><i class="fas fa-tint"></i><br />' + day.precipProbability + '%</td>\n        <td class="daily-high"><i class="fas fa-long-arrow-alt-up"></i>' + day.tempHigh + '\xB0F</td>\n        <td class="daily-low"><i class="fas fa-long-arrow-alt-down"></i>' + day.tempLow + '\xB0F</td>\n      </tr>');
 	  });
+	};
+
+	var postFavorite = exports.postFavorite = function postFavorite() {
+	  var weather = JSON.parse(localStorage.getItem("currentWeather"));
+	  $('.favorites').append('\n    <div class="favorite-location">\n      <div class="location-info">          \n        <div class="city-state"><span class="favorite-city">' + weather.city + '</span>, <span class="favorite-state">' + weather.state + '</span></div>\n      </div>\n      <div class="favorite-weather-details">\n        <div class="favorite-temp">' + weather.temp + '\xB0F</div>\n        <div class="favorite-details">\n          <div class="favorite-icon">' + weather.icon + '</div>\n          <div class="favorite-summary">' + weather.summary + '</div>\n        </div>\n      </div>\n      <div class="favorite-high-low">\n        High: <span class="favorite-temp-high">' + weather.tempHigh + '\xB0F</span>   \n        Low: <span class="favorite-temp-low">' + weather.tempLow + '\xB0F</span>\n      </div>\n    </div>');
 	};
 
 /***/ }),
