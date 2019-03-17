@@ -59,6 +59,7 @@
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 	$(document).ready(function () {
+	  renderNavBar();
 	  renderFavorites();
 	  $('#location-form').on('submit', getLocationInfo);
 	  $('#sign-up').on('submit', registerUser);
@@ -100,6 +101,7 @@
 	var logOut = function logOut() {
 	  document.cookie = "api_key" + "=; expires = Thu, 01 Jan 1970 00:00:00 UTC";
 	  $('.favorites-container').html('');
+	  renderNavBar();
 	};
 
 	var createUser = function createUser(email, password, confPassword) {
@@ -135,13 +137,6 @@
 	  post.postFavorite();
 	};
 
-	var renderFavorites = function renderFavorites() {
-	  if (document.cookie.split('=')[0] === "api_key") {
-	    $('.container').append('<div class="favorites-container">\n          <h2>Favorites</h2>\n          <div class="favorites">  \n          </div>\n        </div>');
-	    post.postFavorites();
-	  };
-	};
-
 	var removeFavorite = function removeFavorite(event) {
 	  var locationId = $(event.target.parentElement).find('.location-id').text();
 	  var apiKey = document.cookie.split('=')[1];
@@ -157,6 +152,25 @@
 	      $('.location-id:contains(' + data.data.id + ')').parent().parent().remove();
 	    }
 	  });
+	};
+
+	var renderNavBar = function renderNavBar() {
+	  if (currentUser()) {
+	    $('nav').html('\n      <div id="page-title">\n        <a href="index.html">Sweater Weather</a>\n      </div>\n      <div id="sign-up-link">\n        <a href=# id="logout">Log Out</a>\n      </div>');
+	  } else {
+	    $('nav').html('\n      <div id="page-title">\n        <a href="index.html">Sweater Weather</a>\n      </div>\n      <div id="sign-up-link">\n        <a href="sign-up.html">Sign Up</a>\n        | \n        <a href="login.html">Log In</a>\n      </div>');
+	  };
+	};
+
+	var renderFavorites = function renderFavorites() {
+	  if (currentUser()) {
+	    $('.container').append('<div class="favorites-container">\n          <h2>Favorites</h2>\n          <div class="favorites">  \n          </div>\n        </div>');
+	    post.postFavorites();
+	  };
+	};
+
+	var currentUser = function currentUser() {
+	  return document.cookie.split('=')[0] === "api_key";
 	};
 
 /***/ }),
@@ -194,7 +208,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif;\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  min-height: 100vh;\n  background-attachment: fixed; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.errors {\n  background-color: rgba(255, 132, 132, 0.8);\n  padding: 2rem;\n  font-size: 1.2rem;\n  font-weight: bold;\n  display: none; }\n\n.current-weather, .detailed-container {\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.75); }\n\n.current-weather {\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n.favorite {\n  text-align: right; }\n  .favorite button {\n    padding: 0.2rem;\n    text-transform: uppercase;\n    font-size: xx-small;\n    font-weight: bold; }\n\n.detailed-container {\n  border: 2px solid black; }\n\n.detailed-weather {\n  display: flex;\n  justify-content: space-between; }\n  .detailed-weather table {\n    min-width: 200px;\n    border-collapse: collapse; }\n  .detailed-weather td {\n    border-bottom: 1px solid black;\n    padding: 8px 8px 4px 8px; }\n\n.table-data {\n  text-align: right; }\n\n.forecast-container {\n  margin: 1rem 10rem 1rem 1rem; }\n\n.hourly-container {\n  display: flex;\n  justify-content: space-around;\n  margin-top: 1rem;\n  padding: 1rem;\n  background-color: rgba(255, 255, 255, 0.75);\n  text-align: center; }\n\n.hourly-icon {\n  font-size: 2rem; }\n\n.daily-container {\n  width: 60%;\n  margin-top: 1rem;\n  padding: 1rem 0 1rem 0;\n  background-color: rgba(255, 255, 255, 0.75); }\n  .daily-container table {\n    width: 100%;\n    table-layout: fixed;\n    text-align: center; }\n  .daily-container tr, .daily-container td {\n    padding-bottom: 1rem; }\n\n.daily-summary {\n  font-size: smaller; }\n\n.day i {\n  font-size: 2rem; }\n\n.daily-day {\n  text-transform: uppercase;\n  font-weight: bold; }\n\n.favorites-container {\n  margin: 1rem;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.75); }\n\n.favorites {\n  display: flex;\n  flex-wrap: wrap; }\n\n.favorite-location {\n  margin: 1rem 2rem;\n  padding: 1rem;\n  width: 210px;\n  border-left: 1px solid black; }\n  .favorite-location .city-state {\n    font-size: 1.5rem;\n    font-weight: bold; }\n\n.location-id {\n  display: none; }\n\n.remove-favorite {\n  padding: 0.2rem;\n  text-transform: uppercase;\n  font-size: xx-small; }\n\n.favorite-temp, .favorite-icon {\n  font-size: 2rem; }\n\n.favorite-weather-details {\n  display: flex; }\n\n.favorite-details {\n  text-align: right; }\n\n.favorite-high-low {\n  padding-top: 1rem;\n  font-size: 0.8rem;\n  text-align: center; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon, #details-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up, #login {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2, #login h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password], #login input[type=email], #login input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit], #login input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif;\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  min-height: 100vh;\n  background-attachment: fixed; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    padding-right: 1rem;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase;\n    font-weight: bold; }\n    nav #sign-up-link a {\n      text-decoration: none; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.errors {\n  background-color: rgba(255, 132, 132, 0.8);\n  padding: 2rem;\n  font-size: 1.2rem;\n  font-weight: bold;\n  display: none; }\n\n.current-weather, .detailed-container {\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.75); }\n\n.current-weather {\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n.favorite {\n  text-align: right; }\n  .favorite button {\n    padding: 0.2rem;\n    text-transform: uppercase;\n    font-size: xx-small;\n    font-weight: bold; }\n\n.detailed-container {\n  border: 2px solid black; }\n\n.detailed-weather {\n  display: flex;\n  justify-content: space-between; }\n  .detailed-weather table {\n    min-width: 200px;\n    border-collapse: collapse; }\n  .detailed-weather td {\n    border-bottom: 1px solid black;\n    padding: 8px 8px 4px 8px; }\n\n.table-data {\n  text-align: right; }\n\n.forecast-container {\n  margin: 1rem 10rem 1rem 1rem; }\n\n.hourly-container {\n  display: flex;\n  justify-content: space-around;\n  margin-top: 1rem;\n  padding: 1rem;\n  background-color: rgba(255, 255, 255, 0.75);\n  text-align: center; }\n\n.hourly-icon {\n  font-size: 2rem; }\n\n.daily-container {\n  width: 60%;\n  margin-top: 1rem;\n  padding: 1rem 0 1rem 0;\n  background-color: rgba(255, 255, 255, 0.75); }\n  .daily-container table {\n    width: 100%;\n    table-layout: fixed;\n    text-align: center; }\n  .daily-container tr, .daily-container td {\n    padding-bottom: 1rem; }\n\n.daily-summary {\n  font-size: smaller; }\n\n.day i {\n  font-size: 2rem; }\n\n.daily-day {\n  text-transform: uppercase;\n  font-weight: bold; }\n\n.favorites-container {\n  margin: 1rem;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.75); }\n\n.favorites {\n  display: flex;\n  flex-wrap: wrap; }\n\n.favorite-location {\n  margin: 1rem 2rem;\n  padding: 1rem;\n  width: 210px;\n  border-left: 1px solid black; }\n  .favorite-location .city-state {\n    font-size: 1.5rem;\n    font-weight: bold; }\n\n.location-id {\n  display: none; }\n\n.remove-favorite {\n  padding: 0.2rem;\n  text-transform: uppercase;\n  font-size: xx-small; }\n\n.favorite-temp, .favorite-icon {\n  font-size: 2rem; }\n\n.favorite-weather-details {\n  display: flex; }\n\n.favorite-details {\n  text-align: right; }\n\n.favorite-high-low {\n  padding-top: 1rem;\n  font-size: 0.8rem;\n  text-align: center; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon, #details-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up, #login {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2, #login h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password], #login input[type=email], #login input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit], #login input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
 
 	// exports
 

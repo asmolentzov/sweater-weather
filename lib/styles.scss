@@ -28,9 +28,14 @@ nav {
   }
   #sign-up-link {
     margin-top: 6px;
+    padding-right: 1rem;
     float: right;
     font-size: smaller;
     text-transform: uppercase;
+    font-weight: bold;
+    a {
+      text-decoration: none;
+    }
   }
 }
 
