@@ -39,6 +39,13 @@ nav {
   margin: 2rem;
 }
 
+.errors {
+  background-color: rgba(255, 132, 132, 0.8);
+  padding: 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
 .current-weather, .detailed-container {
   margin: 1rem;
   max-width: 550px;
