@@ -56,22 +56,16 @@
 
 	var post = _interopRequireWildcard(_postHandlers);
 
-	var _currentWeather = __webpack_require__(7);
-
-	var _currentWeather2 = _interopRequireDefault(_currentWeather);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 	function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-	// This file is in the entry point in your webpack config.
 	$(document).ready(function () {
 	  renderFavorites();
 	  $('#location-form').on('submit', getLocationInfo);
 	  $('#sign-up').on('submit', registerUser);
 	  $('#login').on('submit', logIn);
 	  $('#favorite').click(favoriteLocation);
-	});
+	}); // This file is in the entry point in your webpack config.
+
 
 	var registerUser = function registerUser(event) {
 	  event.preventDefault();
@@ -137,21 +131,8 @@
 	var renderFavorites = function renderFavorites() {
 	  if (document.cookie.split('=')[0] === "api_key") {
 	    $('.container').append('<div class="favorites-container">\n          <h2>Favorites</h2>\n          <div class="favorites">  \n          </div>\n        </div>');
-	    postFavorites();
+	    post.postFavorites();
 	  };
-	};
-
-	var postFavorites = function postFavorites() {
-	  var favoritesUrl = ("http://localhost:3000/api/v1") + "/favorites";
-	  var api_key = document.cookie.split('=')[1];
-	  $.get(favoritesUrl, { api_key: api_key }).then(function (data) {
-	    var favorites = data.data.map(function (favorite) {
-	      return new _currentWeather2.default(favorite);
-	    });
-	    favorites.forEach(function (favorite) {
-	      post.postFavorite(favorite);
-	    });
-	  });
 	};
 
 /***/ }),
@@ -537,7 +518,7 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	exports.postFavorite = exports.postWeatherDays = exports.postWeatherHours = exports.postCurrentWeather = exports.postWeather = exports.postBackgroundImage = undefined;
+	exports.postFavorite = exports.postFavorites = exports.postWeatherDays = exports.postWeatherHours = exports.postCurrentWeather = exports.postWeather = exports.postBackgroundImage = undefined;
 
 	var _currentWeather = __webpack_require__(7);
 
@@ -614,6 +595,19 @@
 	  $('.daily-table').html('');
 	  days.forEach(function (day) {
 	    $('.daily-table').append('\n      <tr class="day">\n        <td class="daily-day">' + day.day + '</td>\n        <td class="daily-summary">' + day.icon + '<br />' + day.summary + '</td>\n        <td class="daily-precip"><i class="fas fa-tint"></i><br />' + day.precipProbability + '%</td>\n        <td class="daily-high"><i class="fas fa-long-arrow-alt-up"></i>' + day.tempHigh + '\xB0F</td>\n        <td class="daily-low"><i class="fas fa-long-arrow-alt-down"></i>' + day.tempLow + '\xB0F</td>\n      </tr>');
+	  });
+	};
+
+	var postFavorites = exports.postFavorites = function postFavorites() {
+	  var favoritesUrl = ("http://localhost:3000/api/v1") + "/favorites";
+	  var api_key = document.cookie.split('=')[1];
+	  $.get(favoritesUrl, { api_key: api_key }).then(function (data) {
+	    var favorites = data.data.map(function (favorite) {
+	      return new _currentWeather2.default(favorite);
+	    });
+	    favorites.forEach(function (favorite) {
+	      postFavorite(favorite);
+	    });
 	  });
 	};
 
