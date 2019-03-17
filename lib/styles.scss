@@ -64,6 +64,16 @@ nav {
   font-weight: bold;
 }
 
+.favorite {
+  text-align: right;
+  button {
+    padding: 0.2rem;
+    text-transform: uppercase;
+    font-size: xx-small;
+    font-weight: bold;
+  }  
+}
+
 .detailed-container {
   border: 2px solid black;
 }
@@ -128,6 +138,43 @@ nav {
 .daily-day {
   text-transform: uppercase;
   font-weight: bold;
+}
+
+.favorites-container {
+  margin: 1rem;
+  padding: 1.5rem;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.favorites {
+  display: flex;
+}
+
+.favorite-location {
+  padding: 1rem;
+  border: 1px solid black;
+  .city-state {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+}
+
+.favorite-temp, .favorite-icon {
+  font-size: 2rem;
+}
+
+.favorite-weather-details {
+  display: flex;
+}
+
+.favorite-details {
+  text-align: right;
+}
+
+.favorite-high-low {
+  padding-top: 1rem;
+  font-size: 0.8rem;
+  text-align: center;
 }
 
 #current-temp {
