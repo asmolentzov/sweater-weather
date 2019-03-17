@@ -62,6 +62,7 @@
 	  $('#location-form').on('submit', getLocationInfo);
 	  $('#sign-up').on('submit', registerUser);
 	  $('#login').on('submit', logIn);
+	  $('#favorite').click(favoriteLocation);
 	}); // This file is in the entry point in your webpack config.
 
 
@@ -111,6 +112,24 @@
 	  $.get(backgroundUrl).then(post.postBackgroundImage).catch(errors.errorBackground);
 	};
 
+	var favoriteLocation = function favoriteLocation(event) {
+	  var location = localStorage.getItem("location");
+	  var api_key = document.cookie.split('=')[1];
+	  var favoritesUrl = ("http://localhost:3000/api/v1") + "/favorites";
+	  $.post(favoritesUrl, { api_key: api_key, location: location }).done(addFavorite);
+	};
+
+	var addFavorite = function addFavorite(data) {
+	  $('.alerts').text("Location Favorited!");
+	  $('#favorite').prop("disabled", true).text("Favorited!");
+	  postFavorite();
+	};
+
+	var postFavorite = function postFavorite() {
+	  var weather = JSON.parse(localStorage.getItem("currentWeather"));
+	  $('.favorites').append('\n    <div class="favorite-location">\n      <div class="location-info">          \n        <div class="city-state"><span class="favorite-city">' + weather.city + '</span>, <span class="favorite-state">' + weather.state + '</span></div>\n      </div>\n      <div class="favorite-weather-details">\n        <div class="favorite-temp">' + weather.temp + '\xB0F</div>\n        <div class="favorite-details">\n          <div class="favorite-icon">' + weather.icon + '</div>\n          <div class="favorite-summary">' + weather.summary + '</div>\n        </div>\n      </div>\n      <div class="favorite-high-low">\n        High: <span class="favorite-temp-high">' + weather.tempHigh + '\xB0F</span>   \n        Low: <span class="favorite-temp-low">' + weather.tempLow + '\xB0F</span>\n      </div>\n    </div>');
+	};
+
 /***/ }),
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -146,7 +165,7 @@
 
 
 	// module
-	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif;\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  min-height: 100vh;\n  background-attachment: fixed; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather, .detailed-container {\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.current-weather {\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n.detailed-container {\n  border: 2px solid black; }\n\n.detailed-weather {\n  display: flex;\n  justify-content: space-between; }\n  .detailed-weather table {\n    min-width: 200px;\n    border-collapse: collapse; }\n  .detailed-weather td {\n    border-bottom: 1px solid black;\n    padding: 8px 8px 4px 8px; }\n\n.table-data {\n  text-align: right; }\n\n.forecast-container {\n  margin: 1rem 10rem 1rem 1rem; }\n\n.hourly-container {\n  display: flex;\n  justify-content: space-around;\n  margin-top: 1rem;\n  padding: 1rem;\n  background-color: rgba(255, 255, 255, 0.5);\n  text-align: center; }\n\n.hourly-icon {\n  font-size: 2rem; }\n\n.daily-container {\n  width: 60%;\n  margin-top: 1rem;\n  padding: 1rem 0 1rem 0;\n  background-color: rgba(255, 255, 255, 0.5); }\n  .daily-container table {\n    width: 100%;\n    table-layout: fixed;\n    text-align: center; }\n  .daily-container tr, .daily-container td {\n    padding-bottom: 1rem; }\n\n.daily-summary {\n  font-size: smaller; }\n\n.day i {\n  font-size: 2rem; }\n\n.daily-day {\n  text-transform: uppercase;\n  font-weight: bold; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon, #details-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up, #login {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2, #login h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password], #login input[type=email], #login input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit], #login input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
+	exports.push([module.id, "* {\n  margin: 0;\n  padding: 0; }\n\nbody {\n  font-family: 'Open Sans', sans-serif;\n  background-image: linear-gradient(-90deg, #006E90, #67B4DA);\n  background-position: center;\n  background-repeat: no-repeat;\n  background-size: cover;\n  min-height: 100vh;\n  background-attachment: fixed; }\n\nnav {\n  background-color: #E6F4F1;\n  min-height: 40px;\n  padding: 8px 20px 0 20px; }\n  nav #page-title {\n    display: inline-block;\n    font-size: larger;\n    font-weight: bold; }\n    nav #page-title a {\n      text-decoration: none; }\n  nav #sign-up-link {\n    margin-top: 6px;\n    float: right;\n    font-size: smaller;\n    text-transform: uppercase; }\n\n.container {\n  position: relative;\n  margin: 2rem; }\n\n.current-weather, .detailed-container {\n  margin: 1rem;\n  max-width: 550px;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.current-weather {\n  display: flex;\n  justify-content: space-between; }\n\n.high-low {\n  font-size: 0.8rem; }\n\n.location-info {\n  padding: 0.5rem; }\n\n.city-state {\n  font-size: 2rem;\n  font-weight: bold; }\n\n.favorite {\n  text-align: right; }\n  .favorite button {\n    padding: 0.2rem;\n    text-transform: uppercase;\n    font-size: xx-small;\n    font-weight: bold; }\n\n.detailed-container {\n  border: 2px solid black; }\n\n.detailed-weather {\n  display: flex;\n  justify-content: space-between; }\n  .detailed-weather table {\n    min-width: 200px;\n    border-collapse: collapse; }\n  .detailed-weather td {\n    border-bottom: 1px solid black;\n    padding: 8px 8px 4px 8px; }\n\n.table-data {\n  text-align: right; }\n\n.forecast-container {\n  margin: 1rem 10rem 1rem 1rem; }\n\n.hourly-container {\n  display: flex;\n  justify-content: space-around;\n  margin-top: 1rem;\n  padding: 1rem;\n  background-color: rgba(255, 255, 255, 0.5);\n  text-align: center; }\n\n.hourly-icon {\n  font-size: 2rem; }\n\n.daily-container {\n  width: 60%;\n  margin-top: 1rem;\n  padding: 1rem 0 1rem 0;\n  background-color: rgba(255, 255, 255, 0.5); }\n  .daily-container table {\n    width: 100%;\n    table-layout: fixed;\n    text-align: center; }\n  .daily-container tr, .daily-container td {\n    padding-bottom: 1rem; }\n\n.daily-summary {\n  font-size: smaller; }\n\n.day i {\n  font-size: 2rem; }\n\n.daily-day {\n  text-transform: uppercase;\n  font-weight: bold; }\n\n.favorites-container {\n  margin: 1rem;\n  padding: 1.5rem;\n  background-color: rgba(255, 255, 255, 0.5); }\n\n.favorites {\n  display: flex; }\n\n.favorite-location {\n  padding: 1rem;\n  border: 1px solid black; }\n  .favorite-location .city-state {\n    font-size: 1.5rem;\n    font-weight: bold; }\n\n.favorite-temp, .favorite-icon {\n  font-size: 2rem; }\n\n.favorite-weather-details {\n  display: flex; }\n\n.favorite-details {\n  text-align: right; }\n\n.favorite-high-low {\n  padding-top: 1rem;\n  font-size: 0.8rem;\n  text-align: center; }\n\n#current-temp {\n  font-size: 4rem;\n  font-weight: bold; }\n\n#current-summary {\n  text-transform: uppercase; }\n\n#current-icon, #details-icon {\n  font-size: 3rem;\n  margin-top: 1rem; }\n\n#sign-up, #login {\n  padding-left: 2rem;\n  max-width: 350px;\n  font-weight: bold; }\n  #sign-up h2, #login h2 {\n    padding-bottom: 0.75rem; }\n  #sign-up input[type=email], #sign-up input[type=password], #login input[type=email], #login input[type=password] {\n    margin-bottom: 0.75rem;\n    margin-left: 0.25rem;\n    padding: 0.25rem;\n    width: 100%; }\n  #sign-up input[type=submit], #login input[type=submit] {\n    padding: 0.5rem 1rem;\n    margin-top: 0.75rem;\n    background-color: #E6F4F1;\n    border-radius: 5px;\n    font-weight: bold;\n    font-size: 1rem; }\n", ""]);
 
 	// exports
 
@@ -516,13 +535,16 @@
 	};
 
 	var postWeather = exports.postWeather = function postWeather(weatherInfo) {
-	  postCurrentWeather(weatherInfo.data.attributes);
+	  $('.alerts').text('');
+	  $('#favorite').prop("disabled", false).text("Favorite");
+	  postCurrentWeather(weatherInfo.data);
 	  postWeatherHours(weatherInfo.data.attributes.weather_hours);
 	  postWeatherDays(weatherInfo.data.attributes.weather_days);
 	};
 
 	var postCurrentWeather = exports.postCurrentWeather = function postCurrentWeather(weatherInfo) {
 	  var currentWeather = new _currentWeather2.default(weatherInfo);
+	  localStorage.setItem("currentWeather", JSON.stringify(currentWeather));
 	  $('#current-temp').text(currentWeather.temp + "\xB0F");
 	  $('#current-summary').text(currentWeather.summaryShort);
 	  $('#current-temp-high').text(currentWeather.tempHigh + "\xB0F");
@@ -578,18 +600,20 @@
 	  function CurrentWeather(attributes) {
 	    _classCallCheck(this, CurrentWeather);
 
-	    this.temp = Math.round(attributes.current_weather.temperature);
-	    this.summaryShort = attributes.current_weather.summary_short;
-	    this.summary = attributes.current_weather.summary;
-	    this.tempHigh = Math.round(attributes.current_weather.temp_high);
-	    this.tempLow = Math.round(attributes.current_weather.temp_low);
-	    this.tempFeelsLike = Math.round(attributes.current_weather.temp_feels_like);
-	    this.humidity = Math.round(attributes.current_weather.humidity * 100);
-	    this.visibility = attributes.current_weather.visibility;
-	    this.uv = attributes.current_weather.uv_index;
-	    this.city = attributes.city;
-	    this.state = attributes.state;
-	    this.date = attributes.date;
+	    localStorage.setItem("location", attributes.id);
+	    var weather = attributes.attributes;
+	    this.temp = Math.round(weather.current_weather.temperature);
+	    this.summaryShort = weather.current_weather.summary_short;
+	    this.summary = weather.current_weather.summary;
+	    this.tempHigh = Math.round(weather.current_weather.temp_high);
+	    this.tempLow = Math.round(weather.current_weather.temp_low);
+	    this.tempFeelsLike = Math.round(weather.current_weather.temp_feels_like);
+	    this.humidity = Math.round(weather.current_weather.humidity * 100);
+	    this.visibility = weather.current_weather.visibility;
+	    this.uv = weather.current_weather.uv_index;
+	    this.city = weather.city;
+	    this.state = weather.state;
+	    this.date = weather.date;
 	    this.icon = this.setIcon();
 	  }
 
