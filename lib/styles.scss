@@ -170,6 +170,16 @@ nav {
   }
 }
 
+.location-id {
+  display: none;
+}
+
+.remove-favorite {
+  padding: 0.2rem;
+  text-transform: uppercase;
+  font-size: xx-small;
+}
+
 .favorite-temp, .favorite-icon {
   font-size: 2rem;
 }
