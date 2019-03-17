@@ -16,18 +16,18 @@ body {
 nav {
   background-color: #E6F4F1;
   min-height: 40px;
-  padding: 8px 20px 0 20px;
+  padding: 8px 20px;
   
   #page-title {
     display: inline-block;
-    font-size: larger;
+    font-size: xx-large;
     font-weight: bold;
     a {
       text-decoration: none;
     }
   }
   #sign-up-link {
-    margin-top: 6px;
+    margin-top: 18px;
     padding-right: 1rem;
     float: right;
     font-size: smaller;
@@ -36,6 +36,13 @@ nav {
     a {
       text-decoration: none;
     }
+  }
+}
+
+a {
+  color: #773400;
+  &:hover {
+    color: #EF972C;
   }
 }
 
@@ -50,6 +57,13 @@ nav {
   font-size: 1.2rem;
   font-weight: bold;
   display: none;
+}
+
+.location-submit {
+  padding: 0.2rem;
+  text-transform: uppercase;
+  font-size: xx-small;
+  font-weight: bold;
 }
 
 .current-weather, .detailed-container {
