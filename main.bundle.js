@@ -61,6 +61,7 @@
 	$(document).ready(function () {
 	  renderNavBar();
 	  renderFavorites();
+	  getLocationInfo();
 	  $('#location-form').on('submit', getLocationInfo);
 	  $('#sign-up').on('submit', registerUser);
 	  $('#login').on('submit', logIn);
@@ -114,7 +115,9 @@
 	};
 
 	var getLocationInfo = function getLocationInfo(event) {
-	  event.preventDefault();
+	  if (event) {
+	    event.preventDefault();
+	  };
 	  var location = $('input').val().toLowerCase();
 	  var locationUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/forecast?location=" + location;
 	  var backgroundUrl = ("https://fierce-meadow-77109.herokuapp.com/api/v1") + "/backgrounds?location=" + location;
